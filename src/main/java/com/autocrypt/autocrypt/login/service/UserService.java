@@ -26,15 +26,15 @@ public class UserService {
         Optional<User> foundNickName = userRepository.findByNickname(nickname);
 
         if(foundUserName.isPresent()){
-            return "이미 존재하는 아이디입니다.";
+            return "username ERROR!";
         }
         if(foundNickName.isPresent()){
-            return "이미 존재하는 닉네임입니다.";
+            return "nickname ERROR!";
         }
 
         User user = new User(username, password, nickname);
         userRepository.save(user);
 
-        return "회원가입을 환영합니다";
+        return "SUCCESS!";
     }
 }

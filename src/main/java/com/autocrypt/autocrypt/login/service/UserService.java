@@ -3,6 +3,7 @@ package com.autocrypt.autocrypt.login.service;
 import com.autocrypt.autocrypt.login.dto.SignUpRequestDto;
 import com.autocrypt.autocrypt.login.repository.UserRepository;
 import com.autocrypt.autocrypt.model.User;
+import com.autocrypt.autocrypt.util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,25 +15,18 @@ import java.util.Optional;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final Validator validator;
 
 
     public String registerUser(SignUpRequestDto requestDto) {
 
-        String username = requestDto.getUsername();
-        String password = passwordEncoder.encode(requestDto.getPassword());
-        String nickname = requestDto.getNickname();
+        validator.usernameCheck(requestDto);
+        validator.nicknameCheck(requestDto);
 
-        Optional<User> foundUserName = userRepository.findByUsername(username);
-        Optional<User> foundNickName = userRepository.findByNickname(nickname);
+        User user = new User(requestDto.getUsername(),
+                            passwordEncoder.encode(requestDto.getPassword()),
+                            requestDto.getNickname());
 
-        if(foundUserName.isPresent()){
-            return "username ERROR!";
-        }
-        if(foundNickName.isPresent()){
-            return "nickname ERROR!";
-        }
-
-        User user = new User(username, password, nickname);
         userRepository.save(user);
 
         return "SUCCESS!";

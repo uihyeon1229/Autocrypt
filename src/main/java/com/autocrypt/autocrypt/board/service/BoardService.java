@@ -6,6 +6,7 @@ import com.autocrypt.autocrypt.board.dto.BoardResponseDto;
 import com.autocrypt.autocrypt.board.repository.BoardRepository;
 import com.autocrypt.autocrypt.model.Board;
 import com.autocrypt.autocrypt.security.UserDetailsImpl;
+import com.autocrypt.autocrypt.util.Validator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final Validator validator;
 
     //게시판 글 작성
     public BoardResponseDto saveBoard(BoardRequestDto requestDto, UserDetailsImpl userDetails) {
@@ -47,20 +49,16 @@ public class BoardService {
     @Transactional
     public BoardDetailResponseDto editBoard(Long boardId, BoardRequestDto requestDto, UserDetailsImpl userDetails) {
         Board board = boardRepository.findByBoardId(boardId);
-        if(board.getUser().getUserId() != userDetails.getUser().getUserId()){
-            throw new IllegalArgumentException("수정 권한 ERROR!");
-        }
+        validator.boardAuthCheck(boardId,userDetails);
         board.edit(requestDto,userDetails);
 
         return new BoardDetailResponseDto(board);
     }
 
+    //게시글 삭제
     @Transactional
     public void deleteBoard(Long boardId, UserDetailsImpl userDetails) {
-        Board board = boardRepository.findByBoardId(boardId);
-        if(board.getUser().getUserId() != userDetails.getUser().getUserId()){
-            throw new IllegalArgumentException("삭제 권한 ERROR!");
-        }
+        validator.boardAuthCheck(boardId,userDetails);
         boardRepository.deleteById(boardId);
     }
 }

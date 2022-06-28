@@ -24,10 +24,10 @@ public class BoardService {
     public BoardResponseDto saveBoard(BoardRequestDto requestDto, UserDetailsImpl userDetails) {
         Board board = new Board(requestDto,userDetails);
         boardRepository.save(board);
-
         return new BoardResponseDto(userDetails,board);
     }
 
+    //게시판 조회
     public List<BoardResponseDto> findAll(UserDetailsImpl userDetails) {
 
         List<Board> allBoard = boardRepository.findAllByOrderByCreatedAtDesc();
@@ -39,9 +39,12 @@ public class BoardService {
         }
         return boardResponseDtos;
     }
+
     //게시글 조회
     public BoardDetailResponseDto detail(Long boardId, UserDetailsImpl userDetails) {
         Board board = boardRepository.findByBoardId(boardId);
+        validator.secretCheck(boardId,userDetails);
+
         return new BoardDetailResponseDto(board);
     }
 

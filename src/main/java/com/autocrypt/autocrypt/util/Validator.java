@@ -20,9 +20,15 @@ public class Validator {
 
     public void boardAuthCheck(Long boardId, UserDetailsImpl userDetails){
         Board board = getboard(boardId);
-
         if(board.getUser().getUserId() != userDetails.getUser().getUserId()){
             throw new IllegalArgumentException("권한이 없습니다.");
+        }
+    }
+
+    public void secretCheck(Long boardId, UserDetailsImpl userDetails) {
+        Board board = getboard(boardId);
+        if(board.isSecret()==true && board.getUser().getUserId() != userDetails.getUser().getUserId()){
+            throw new IllegalArgumentException("비밀글은 본인만 확인할 수 있습니다.");
         }
     }
 
@@ -31,7 +37,6 @@ public class Validator {
         if(foundUserName.isPresent()){
             throw new IllegalArgumentException("이미 사용중인 username입니다.");
         }
-
     }
 
     public void nicknameCheck(SignUpRequestDto requestDto) {
@@ -41,9 +46,12 @@ public class Validator {
         }
     }
 
+
+
     public Board getboard(Long boardId){
         return boardRepository.findByBoardId(boardId);
     }
+
 
 
 }

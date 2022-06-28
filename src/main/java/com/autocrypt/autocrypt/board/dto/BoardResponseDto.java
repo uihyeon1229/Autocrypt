@@ -17,6 +17,7 @@ public class BoardResponseDto {
     private String boardTitle;
     private String boardContent;
     private LocalDateTime createdAt;
+    private boolean secret;
 
     public BoardResponseDto(UserDetailsImpl userDetails, Board board) {
         this.userId = userDetails.getUser().getUserId();
@@ -25,6 +26,7 @@ public class BoardResponseDto {
         this.boardTitle = board.getBoardTitle();
         this.boardContent = board.getBoardContent();
         this.createdAt = board.getCreatedAt();
+        this.secret = board.isSecret();
     }
 
     public BoardResponseDto(Board board) {
@@ -34,5 +36,6 @@ public class BoardResponseDto {
         this.boardTitle = board.getBoardTitle();
         this.boardContent = board.getBoardContent();
         this.createdAt = board.getCreatedAt();
+        this.secret = board.isSecret();
     }
 }

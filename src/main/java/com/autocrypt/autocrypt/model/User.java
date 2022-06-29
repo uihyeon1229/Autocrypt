@@ -1,5 +1,6 @@
 package com.autocrypt.autocrypt.model;
 
+import com.autocrypt.autocrypt.login.dto.SignUpRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @NoArgsConstructor
-@Table(name="Users")
+@Table(name="users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

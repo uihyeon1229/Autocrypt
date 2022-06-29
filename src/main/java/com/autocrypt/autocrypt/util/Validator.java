@@ -9,6 +9,7 @@ import com.autocrypt.autocrypt.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
 import java.util.Optional;
 
 @Component
@@ -19,15 +20,15 @@ public class Validator {
     private final UserRepository userRepository;
 
     public void boardAuthCheck(Long boardId, UserDetailsImpl userDetails){
-        Board board = getboard(boardId);
-        if(board.getUser().getUserId() != userDetails.getUser().getUserId()){
+        Board board = getBoard(boardId);
+        if(!Objects.equals(board.getUser().getUserId(), userDetails.getUser().getUserId())){
             throw new IllegalArgumentException("권한이 없습니다.");
         }
     }
 
     public void secretCheck(Long boardId, UserDetailsImpl userDetails) {
-        Board board = getboard(boardId);
-        if(board.isSecret()==true && board.getUser().getUserId() != userDetails.getUser().getUserId()){
+        Board board = getBoard(boardId);
+        if(board.isSecret() && !Objects.equals(board.getUser().getUserId(), userDetails.getUser().getUserId())){
             throw new IllegalArgumentException("비밀글은 본인만 확인할 수 있습니다.");
         }
     }
@@ -46,12 +47,8 @@ public class Validator {
         }
     }
 
-
-
-    public Board getboard(Long boardId){
+    public Board getBoard(Long boardId){
         return boardRepository.findByBoardId(boardId);
     }
-
-
 
 }

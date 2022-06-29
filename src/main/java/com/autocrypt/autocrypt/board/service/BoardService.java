@@ -24,19 +24,19 @@ public class BoardService {
     public BoardResponseDto saveBoard(BoardRequestDto requestDto, UserDetailsImpl userDetails) {
         Board board = new Board(requestDto,userDetails);
         boardRepository.save(board);
+
         return new BoardResponseDto(userDetails,board);
     }
 
     //게시판 조회
-    public List<BoardResponseDto> findAll(UserDetailsImpl userDetails) {
-
+    public List<BoardResponseDto> findAll() {
         List<Board> allBoard = boardRepository.findAllByOrderByCreatedAtDesc();
-
         List<BoardResponseDto> boardResponseDtos = new ArrayList<>();
 
         for(Board board : allBoard){
             boardResponseDtos.add(new BoardResponseDto(board));
         }
+
         return boardResponseDtos;
     }
 

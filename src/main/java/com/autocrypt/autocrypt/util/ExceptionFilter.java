@@ -2,11 +2,11 @@ package com.autocrypt.autocrypt.util;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.*;
 
 @RestControllerAdvice
-public class ExceptionHandler {
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = { IllegalArgumentException.class })
+public class ExceptionFilter {
+    @ExceptionHandler(value = { IllegalArgumentException.class })
     public ResponseEntity<Object> handleApiRequestException(IllegalArgumentException ex) {
         Exception exception = new Exception();
         exception.setHttpStatus(HttpStatus.BAD_REQUEST);
@@ -18,7 +18,7 @@ public class ExceptionHandler {
         );
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(value = { NullPointerException.class })
+    @ExceptionHandler(value = { NullPointerException.class })
     public ResponseEntity<Object> handleApiRequestException(NullPointerException ex) {
         Exception exception = new Exception();
         exception.setHttpStatus(HttpStatus.BAD_REQUEST);

@@ -1,6 +1,5 @@
 package com.autocrypt.autocrypt.board.service;
 
-import com.autocrypt.autocrypt.board.dto.BoardDetailResponseDto;
 import com.autocrypt.autocrypt.board.dto.BoardRequestDto;
 import com.autocrypt.autocrypt.board.dto.BoardResponseDto;
 import com.autocrypt.autocrypt.board.repository.BoardRepository;
@@ -41,21 +40,21 @@ public class BoardService {
     }
 
     //게시글 조회
-    public BoardDetailResponseDto detail(Long boardId, UserDetailsImpl userDetails) {
+    public BoardResponseDto detail(Long boardId, UserDetailsImpl userDetails) {
         Board board = boardRepository.findByBoardId(boardId);
         validator.secretCheck(boardId,userDetails);
 
-        return new BoardDetailResponseDto(board);
+        return new BoardResponseDto(board);
     }
 
     //게시글 수정
     @Transactional
-    public BoardDetailResponseDto editBoard(Long boardId, BoardRequestDto requestDto, UserDetailsImpl userDetails) {
+    public BoardResponseDto editBoard(Long boardId, BoardRequestDto requestDto, UserDetailsImpl userDetails) {
         Board board = boardRepository.findByBoardId(boardId);
         validator.boardAuthCheck(boardId,userDetails);
         board.edit(requestDto,userDetails);
 
-        return new BoardDetailResponseDto(board);
+        return new BoardResponseDto(board);
     }
 
     //게시글 삭제

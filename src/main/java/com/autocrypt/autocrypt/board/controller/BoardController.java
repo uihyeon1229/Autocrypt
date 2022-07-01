@@ -1,13 +1,11 @@
 package com.autocrypt.autocrypt.board.controller;
 
-import com.autocrypt.autocrypt.board.dto.BoardDetailResponseDto;
 import com.autocrypt.autocrypt.board.dto.BoardRequestDto;
 import com.autocrypt.autocrypt.board.dto.BoardResponseDto;
 import com.autocrypt.autocrypt.board.service.BoardService;
 import com.autocrypt.autocrypt.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,13 +31,13 @@ public class BoardController {
 
     //게시글 상세조회
     @GetMapping("/board/{boardId}")
-    public BoardDetailResponseDto detail(@PathVariable("boardId") Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public BoardResponseDto detail(@PathVariable("boardId") Long boardId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return boardService.detail(boardId,userDetails);
     }
 
     //게시글 수정
     @PutMapping("/board/{boardId}")
-    public BoardDetailResponseDto editBoard(@PathVariable("boardId") Long boardId, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
+    public BoardResponseDto editBoard(@PathVariable("boardId") Long boardId, @RequestBody BoardRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
         return boardService.editBoard(boardId,requestDto,userDetails);
     }
 

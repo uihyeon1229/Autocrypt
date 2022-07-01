@@ -13,6 +13,10 @@
 - 비로그인시 게시판 접근 불가능
 
 ---
+## API설계
+- [API 설계](https://north-account-b44.notion.site/87e4fcdd2bb946b1ba955c30b95ba1b5?v=89b2bad4cd8c45ae83a2f298904b99c4)
+
+---
 
 ## 테스트 시나리오
 

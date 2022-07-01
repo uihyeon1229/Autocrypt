@@ -1,10 +1,10 @@
 # Autocrypt
 
-<!-- 서비스 간략설명  -->
-
 ## 서비스 소개
 
 - SpringBoot 와 MySQL을 사용하여 REST API 기반의 게시판 기능을 구현하였습니다.
+
+---
 
 ## 핵심 기능
 - Spring Security와 JWT를 이용한 회원가입
